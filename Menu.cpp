@@ -7,14 +7,15 @@
 #include "Menu.h"
 #include <iostream>
 
-using namespace std;
+string Menu::menuItems[Menu::MENU_SIZE] = {"Burger", "Pizza", "Sushi"};
+double Menu::menuPrices[Menu::MENU_SIZE] = {5.99, 8.99, 12.99};
 
 void Menu::displayMenu() {
-    cout << endl << endl;
     cout << "=========================================" << endl;
     cout << " BabyPanda Menu" << endl;
     cout << "=========================================" << endl;
-    cout << "1. Burger - RM5.99\n2. Pizza - RM8.99\n3. Sushi - RM12.99\n";
+    for (int i = 0; i < MENU_SIZE; i++) {
+        cout << i + 1 << ". " << menuItems[i] << " - $" << menuPrices[i] << endl;
+    }
     cout << "=========================================" << endl;
-    cout << endl << endl;
 }

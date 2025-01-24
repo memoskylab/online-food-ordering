@@ -5,30 +5,39 @@
 */
 
 #include "Order.h"
+#include "Menu.h"
 #include <iostream>
 #include <fstream>
 
 using namespace std;
 
 void Order::placeOrder(Customer &customer) {
-    string items;
-    double total;
-    cout << "Enter items you want to order: ";
-    cin.ignore();
-    getline(cin, items);
-    cout << "How many items you want to order: ";
-    cin >> total;
+    int itemIndex, quantity;
+    string itemName;
+    double itemPrice, total = 0;
+
+    cout << "Enter the item index to order (1 to " << Menu::MENU_SIZE << "): ";
+    cin >> itemIndex;
+
+    if (itemIndex < 1 || itemIndex > Menu::MENU_SIZE) {
+        cout << "Invalid item index. Please try again.\n";
+        return;
+    }
+
+    itemName = Menu::menuItems[itemIndex - 1];
+    itemPrice = Menu::menuPrices[itemIndex - 1];
+
+    cout << "Enter the quantity: ";
+    cin >> quantity;
+
+    total = itemPrice * quantity;
 
     ofstream file("orders.txt", ios::app);
     if (file.is_open()) {
-        file << customer << "," << items << "," << total << endl;
+        file << customer.getName() << "," << customer.getPhone() << "," << itemName << "," << total << endl;
         file.close();
-        cout << endl << endl;
         cout << "Order placed successfully!\n";
-        cout << endl << endl;
     } else {
-        cout << endl << endl;
         cout << "Error: Unable to open file.\n";
-        cout << endl << endl;
     }
 }
